@@ -46,8 +46,13 @@
             50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
-        #mobile-menu {
-            display: none;
+        .input-error {
+            border-color: #ef4444;
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
         }
     </style>
 </head>
@@ -69,13 +74,13 @@
                     </div>
                 </div>
                 <div class="hidden sm:ml-6 sm:flex sm:items-center">
-                    <button onclick="showModal('Post a Project')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium mr-4">Post a Project</button>
-                    <button onclick="showModal('Sign In')" class="text-indigo-600 hover:text-indigo-800 px-4 py-2 rounded-md text-sm font-medium">Sign In</button>
+                    <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium mr-4 post-project-btn">Post a Project</button>
+                    <button class="text-indigo-600 hover:text-indigo-800 px-4 py-2 rounded-md text-sm font-medium sign-in-btn">Sign In</button>
                 </div>
                 <div class="-mr-2 flex items-center sm:hidden">
-                    <button onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
                         <span class="sr-only">Open main menu</span>
-                        <i class="fas fa-bars" id="menu-icon"></i>
+                        <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
@@ -89,21 +94,464 @@
                 <a href="#how-it-works" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">How It Works</a>
                 <a href="#testimonials" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Testimonials</a>
                 <div class="mt-4 pl-3">
-                    <button onclick="showModal('Post a Project')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium mb-2 w-full">Post a Project</button>
-                    <button onclick="showModal('Sign In')" class="text-indigo-600 hover:text-indigo-800 px-4 py-2 rounded-md text-sm font-medium w-full">Sign In</button>
+                    <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium mb-2 w-full post-project-btn">Post a Project</button>
+                    <button class="text-indigo-600 hover:text-indigo-800 px-4 py-2 rounded-md text-sm font-medium w-full sign-in-btn">Sign In</button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Rest of your HTML remains exactly the same until the scripts at the bottom -->
-    
+    <!-- Hero Section -->
+    <div class="gradient-bg text-white">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+                    Bridge the gap between learning and experience
+                </h1>
+                <p class="mt-6 max-w-lg mx-auto text-xl">
+                    Connect with real companies, work on meaningful projects, and build your resume with hands-on experience.
+                </p>
+                <div class="mt-10 flex justify-center space-x-4">
+                    <a href="#projects" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-white hover:bg-gray-50">
+                        Find Projects
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-800 bg-opacity-60 hover:bg-opacity-70">
+                        <i class="fas fa-play mr-2"></i>
+                        Watch Video
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="bg-gray-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="bg-white p-6 rounded-lg shadow text-center">
+                    <div class="text-4xl font-bold text-indigo-600">1,200+</div>
+                    <div class="mt-2 text-gray-600">Projects Completed</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow text-center">
+                    <div class="text-4xl font-bold text-indigo-600">850+</div>
+                    <div class="mt-2 text-gray-600">Companies Registered</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow text-center">
+                    <div class="text-4xl font-bold text-indigo-600">5,000+</div>
+                    <div class="mt-2 text-gray-600">Students Engaged</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow text-center">
+                    <div class="text-4xl font-bold text-indigo-600">300+</div>
+                    <div class="mt-2 text-gray-600">Students Hired</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div id="projects" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Featured Projects
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                    Browse through real projects from startups and established companies
+                </p>
+            </div>
+            <!-- Search & Filters -->
+            <div class="mb-8 p-4 bg-gray-50 rounded-lg">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div class="mb-4 md:mb-0">
+                        <input type="text" id="project-search" placeholder="Search projects..." 
+                               class="px-4 py-2 border rounded-md w-full md:w-64">
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <select id="project-category" class="px-4 py-2 border rounded-md">
+                            <option value="">All Categories</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                        </select>
+                        <select id="project-compensation" class="px-4 py-2 border rounded-md">
+                            <option value="">Any Compensation</option>
+                            <option value="paid">Paid</option>
+                            <option value="certificate">Certificate</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Project Card 1 -->
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">TechStart Inc.</div>
+                                <div class="text-sm text-gray-500">Posted 2 days ago</div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">E-commerce Website Development</h3>
+                            <p class="mt-2 text-gray-600">We need a modern e-commerce website built with React and Node.js. Experience with payment gateways preferred.</p>
+                        </div>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">Web Development</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">React</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">Node.js</span>
+                        </div>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-900">$500 - $1,200</span>
+                            <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium view-details-btn">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">GreenSolutions</div>
+                                <div class="text-sm text-gray-500">Posted 1 week ago</div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Data Analysis for Sustainability</h3>
+                            <p class="mt-2 text-gray-600">Analyze our energy consumption data and provide insights for improving sustainability. Python and data visualization skills required.</p>
+                        </div>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">Data Science</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">Python</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">Visualization</span>
+                        </div>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-900">Certificate + $300</span>
+                            <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium view-details-btn">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">HealthTrack</div>
+                                <div class="text-sm text-gray-500">Posted 3 days ago</div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Mobile App UI/UX Design</h3>
+                            <p class="mt-2 text-gray-600">Redesign our health tracking mobile app with improved user experience. Portfolio of previous design work required.</p>
+                        </div>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">UI/UX Design</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">Figma</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">Mobile</span>
+                        </div>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-900">Certificate + $400</span>
+                            <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium view-details-btn">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 view-all-btn">
+                    View All Projects
+                    <i class="fas fa-chevron-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div id="how-it-works" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    How ProjectHub Works
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                    Simple steps to gain real-world experience and build your portfolio
+                </p>
+            </div>
+
+            <div class="mt-16">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+                    <!-- Step 1 -->
+                    <div class="bg-white p-8 rounded-lg shadow text-center">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600">
+                            <span class="text-xl font-bold">1</span>
+                        </div>
+                        <h3 class="mt-6 text-lg font-medium text-gray-900">Browse Projects</h3>
+                        <p class="mt-2 text-gray-500">
+                            Explore projects from various domains that match your skills and interests.
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="bg-white p-8 rounded-lg shadow text-center">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600">
+                            <span class="text-xl font-bold">2</span>
+                        </div>
+                        <h3 class="mt-6 text-lg font-medium text-gray-900">Apply & Collaborate</h3>
+                        <p class="mt-2 text-gray-500">
+                            Submit your proposal, get selected, and work directly with the company.
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-white p-8 rounded-lg shadow text-center">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600">
+                            <span class="text-xl font-bold">3</span>
+                        </div>
+                        <h3 class="mt-6 text-lg font-medium text-gray-900">Showcase & Grow</h3>
+                        <p class="mt-2 text-gray-500">
+                            Add the project to your portfolio, get a certificate, and possibly get hired!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-gray-900">For Students</h3>
+                        <ul class="mt-6 space-y-4">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">
+                                    Gain hands-on experience with real companies
+                                </p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">
+                                    Build a professional portfolio to showcase to employers
+                                </p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">
+                                    Earn certificates and potential payment for your work
+                                </p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-green-500"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">
+                                    Get noticed by companies looking to hire talent
+                                </p>
+                            </li>
+                        </ul>
+                        <div class="mt-8">
+                            <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 sign-up-student-btn">
+                                Sign Up as Student
+                                <i class="fas fa-user-graduate ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-indigo-50 p-8">
+                        <h3 class="text-2xl font-bold text-gray-900">For Companies</h3>
+                        <ul class="mt-6 space-y-4">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-indigo-600"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">
+                                    Get projects done by talented students at affordable rates
+                                </p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-indigo-600"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">
+                                    Discover and evaluate potential hires through real work
+                                </p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-indigo-600"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">
+                                    Support student development and give back to the community
+                                </p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-indigo-600"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">
+                                    Only pay if you're satisfied with the work delivered
+                                </p>
+                            </li>
+                        </ul>
+                        <div class="mt-8">
+                            <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 sign-up-company-btn">
+                                Post a Project
+                                <i class="fas fa-building ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div id="testimonials" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Success Stories
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                    Hear from students and companies who've benefited from ProjectHub
+                </p>
+            </div>
+
+            <div class="mt-16 grid gap-8 md:grid-cols-2">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-50 p-8 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <div class="text-lg font-medium text-gray-900">Sarah Johnson</div>
+                            <div class="text-indigo-600">Computer Science Student</div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-600">
+                            "Through ProjectHub, I worked on a real e-commerce project that became the highlight of my resume. The company loved my work and offered me an internship. The experience was invaluable!"
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <div class="ml-2 text-sm text-gray-500">Completed 3 projects</div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-50 p-8 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <div class="text-lg font-medium text-gray-900">Michael Chen</div>
+                            <div class="text-indigo-600">Founder, TechStart Inc.</div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-600">
+                            "We've found three amazing developers through ProjectHub. The quality of work from students has been outstanding, and we ended up hiring two of them full-time after graduation. It's a win-win for everyone."
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                        <div class="ml-2 text-sm text-gray-500">Posted 12 projects</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">ProjectHub</h3>
+                    <p class="text-gray-400">
+                        Connecting students with real-world projects to bridge the gap between education and industry.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">For Students</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Browse Projects</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Create Profile</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Success Stories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">For Companies</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Post a Project</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Browse Students</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Company Guide</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Connect With Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-400">Subscribe to our newsletter</p>
+                        <div class="mt-2 flex">
+                            <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-md w-full text-gray-800">
+                            <button class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-r-md">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400">
+                <p>&copy; 2023 ProjectHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <!-- Modal -->
     <div id="modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
         <div class="bg-white rounded-lg shadow-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold text-gray-900" id="modal-title">Sign Up</h3>
-                <button onclick="hideModal()" class="text-gray-400 hover:text-gray-500">
+                <button id="close-modal" class="text-gray-400 hover:text-gray-500">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -113,58 +561,381 @@
         </div>
     </div>
 
-    <!-- SIMPLE JAVASCRIPT THAT WILL MAKE ALL BUTTONS WORK -->
     <script>
         // Mobile menu toggle
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuIcon = document.getElementById('menu-icon');
-            
-            if (mobileMenu.classList.contains('hidden')) {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
                 mobileMenu.classList.remove('hidden');
-                menuIcon.classList.remove('fa-bars');
-                menuIcon.classList.add('fa-times');
+                mobileMenuButton.innerHTML = '<i class="fas fa-times"></i>';
             } else {
                 mobileMenu.classList.add('hidden');
-                menuIcon.classList.remove('fa-times');
-                menuIcon.classList.add('fa-bars');
+                mobileMenuButton.innerHTML = '<i class="fas fa-bars"></i>';
             }
-        }
-
-        // Show modal with basic forms
-        function showModal(title) {
-            document.getElementById('modal-title').textContent = title;
-            document.getElementById('modal').classList.remove('hidden');
-            
-            if (title === 'Sign In') {
-                document.getElementById('modal-content').innerHTML = `
-                    <p class="mb-4">This would be a sign-in form in a real app.</p>
-                    <button onclick="alert('Sign In clicked!')" class="w-full bg-indigo-600 text-white py-2 rounded">Sign In</button>
-                `;
-            } else {
-                document.getElementById('modal-content').innerHTML = `
-                    <p class="mb-4">This would be a project form in a real app.</p>
-                    <button onclick="alert('Project form submitted!')" class="w-full bg-indigo-600 text-white py-2 rounded">Submit</button>
-                `;
-            }
-        }
-
-        // Hide modal
-        function hideModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
-
-        // Make all "View Details" buttons work
-        document.querySelectorAll('.view-details-btn').forEach(button => {
-            button.onclick = () => alert('Viewing project details!');
         });
 
-        // Make "View All Projects" button work
-        document.querySelector('.view-all-btn').onclick = () => alert('Showing all projects!');
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuButton.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                }
+            });
+        });
 
-        // Make sign-up buttons work
-        document.querySelector('.sign-up-student-btn').onclick = () => showModal('Student Sign Up');
-        document.querySelector('.sign-up-company-btn').onclick = () => showModal('Company Sign Up');
-    </script>
+        // Project card hover effects
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'all 0.3s ease';
+            });
+            
+            card.addEventListener('click', () => {
+                // In a real implementation, this would navigate to project details
+                alert('This would navigate to project details page in a full implementation');
+            });
+        });
+
+        // Modal handling
+        const modal = document.getElementById('modal');
+        
+        // Open modal for sign-up/post project buttons
+        document.querySelectorAll('.sign-up-student-btn, .sign-up-company-btn, .post-project-btn, .sign-in-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                let isCompany = button.classList.contains('sign-up-company-btn') || 
+                               button.classList.contains('post-project-btn');
+                let isSignIn = button.classList.contains('sign-in-btn');
+                
+                if (isSignIn) {
+                    showSignInForm();
+                } else {
+                    showSignUpForm(isCompany);
+                }
+                
+                modal.classList.remove('hidden');
+            });
+        });
+
+        // Show sign in form
+        function showSignInForm() {
+            document.getElementById('modal-title').textContent = 'Sign In';
+            document.getElementById('modal-content').innerHTML = `
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="login-email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <div id="login-email-error" class="error-message hidden">Please enter a valid email</div>
+                    </div>
+                    <div>
+                                            <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="login-password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <div id="login-password-error" class="error-message hidden">Password must be at least 6 characters</div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                    </div>
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Sign In
+                    </button>
+                </div>
+                <div class="text-sm text-center">
+                    <span class="text-gray-600">Don't have an account? </span>
+                    <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500 switch-to-signup">Sign up</button>
+                </div>
+            </form>
+        `;
+    }
+
+    // Show sign up form
+    function showSignUpForm(isCompany = false) {
+        const title = isCompany ? 'Company Sign Up' : 'Student Sign Up';
+        document.getElementById('modal-title').textContent = title;
+        
+        const companyFields = isCompany ? `
+            <div>
+                <label for="company-name" class="block text-sm font-medium text-gray-700">Company Name</label>
+                <input type="text" id="company-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                <div id="company-name-error" class="error-message hidden">Please enter your company name</div>
+            </div>
+            <div>
+                <label for="industry" class="block text-sm font-medium text-gray-700">Industry</label>
+                <select id="industry" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="">Select industry</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Education">Education</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+        ` : `
+            <div>
+                <label for="university" class="block text-sm font-medium text-gray-700">University</label>
+                <input type="text" id="university" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                <div id="university-error" class="error-message hidden">Please enter your university</div>
+            </div>
+            <div>
+                <label for="major" class="block text-sm font-medium text-gray-700">Major</label>
+                <input type="text" id="major" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                <div id="major-error" class="error-message hidden">Please enter your major</div>
+            </div>
+            <div>
+                <label for="skills" class="block text-sm font-medium text-gray-700">Skills (comma separated)</label>
+                <input type="text" id="skills" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., JavaScript, Python, UI Design">
+            </div>
+        `;
+
+        document.getElementById('modal-content').innerHTML = `
+            <form id="signup-form" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="first-name" class="block text-sm font-medium text-gray-700">First Name</label>
+                        <input type="text" id="first-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <div id="first-name-error" class="error-message hidden">Please enter your first name</div>
+                    </div>
+                    <div>
+                        <label for="last-name" class="block text-sm font-medium text-gray-700">Last Name</label>
+                        <input type="text" id="last-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <div id="last-name-error" class="error-message hidden">Please enter your last name</div>
+                    </div>
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <div id="email-error" class="error-message hidden">Please enter a valid email</div>
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <div id="password-error" class="error-message hidden">Password must be at least 8 characters</div>
+                </div>
+                ${companyFields}
+                <div class="flex items-center">
+                    <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                    <label for="terms" class="ml-2 block text-sm text-gray-700">I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-500">terms and conditions</a></label>
+                </div>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Sign Up
+                    </button>
+                </div>
+                <div class="text-sm text-center">
+                    <span class="text-gray-600">Already have an account? </span>
+                    <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500 switch-to-signin">Sign in</button>
+                </div>
+            </form>
+        `;
+
+        // Add event listeners to the switch buttons
+        document.querySelector('.switch-to-signin')?.addEventListener('click', () => {
+            showSignInForm();
+        });
+
+        document.querySelector('.switch-to-signup')?.addEventListener('click', () => {
+            showSignUpForm();
+        });
+    }
+
+    // Close modal
+    document.getElementById('close-modal').addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
+
+    // Form validation for sign up
+    document.addEventListener('submit', (e) => {
+        if (e.target.id === 'signup-form') {
+            e.preventDefault();
+            
+            let isValid = true;
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const firstName = document.getElementById('first-name');
+            const lastName = document.getElementById('last-name');
+            
+            // Reset errors
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.add('hidden');
+            });
+            document.querySelectorAll('input').forEach(input => {
+                input.classList.remove('input-error');
+            });
+            
+            // Validate email
+            if (!email.value || !email.value.includes('@')) {
+                document.getElementById('email-error').classList.remove('hidden');
+                email.classList.add('input-error');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!password.value || password.value.length < 8) {
+                document.getElementById('password-error').classList.remove('hidden');
+                password.classList.add('input-error');
+                isValid = false;
+            }
+            
+            // Validate first name
+            if (!firstName.value) {
+                document.getElementById('first-name-error').classList.remove('hidden');
+                firstName.classList.add('input-error');
+                isValid = false;
+            }
+            
+            // Validate last name
+            if (!lastName.value) {
+                document.getElementById('last-name-error').classList.remove('hidden');
+                lastName.classList.add('input-error');
+                isValid = false;
+            }
+            
+            // Additional validation for company/student fields
+            if (document.getElementById('company-name') && !document.getElementById('company-name').value) {
+                document.getElementById('company-name-error').classList.remove('hidden');
+                document.getElementById('company-name').classList.add('input-error');
+                isValid = false;
+            }
+            
+            if (document.getElementById('university') && !document.getElementById('university').value) {
+                document.getElementById('university-error').classList.remove('hidden');
+                document.getElementById('university').classList.add('input-error');
+                isValid = false;
+            }
+            
+            if (document.getElementById('major') && !document.getElementById('major').value) {
+                document.getElementById('major-error').classList.remove('hidden');
+                document.getElementById('major').classList.add('input-error');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // In a real app, you would submit the form here
+                alert('Form submitted successfully!');
+                modal.classList.add('hidden');
+            }
+        }
+        
+        if (e.target.id === 'login-form') {
+            e.preventDefault();
+            
+            let isValid = true;
+            const email = document.getElementById('login-email');
+            const password = document.getElementById('login-password');
+            
+            // Reset errors
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.add('hidden');
+            });
+            document.querySelectorAll('input').forEach(input => {
+                input.classList.remove('input-error');
+            });
+            
+            // Validate email
+            if (!email.value || !email.value.includes('@')) {
+                document.getElementById('login-email-error').classList.remove('hidden');
+                email.classList.add('input-error');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!password.value || password.value.length < 6) {
+                document.getElementById('login-password-error').classList.remove('hidden');
+                password.classList.add('input-error');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // In a real app, you would submit the form here
+                alert('Logged in successfully!');
+                modal.classList.add('hidden');
+            }
+        }
+    });
+
+    // Project search functionality
+    const projectSearch = document.getElementById('project-search');
+    const projectCategory = document.getElementById('project-category');
+    const projectCompensation = document.getElementById('project-compensation');
+    
+    [projectSearch, projectCategory, projectCompensation].forEach(element => {
+        element.addEventListener('change', filterProjects);
+    });
+    
+    function filterProjects() {
+        const searchTerm = projectSearch.value.toLowerCase();
+        const category = projectCategory.value;
+        const compensation = projectCompensation.value;
+        
+        document.querySelectorAll('.project-card').forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            const description = card.querySelector('p').textContent.toLowerCase();
+            const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent);
+            const compensationText = card.querySelector('div:last-child > span').textContent.toLowerCase();
+            
+            const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+            const matchesCategory = !category || tags.includes(category);
+            let matchesCompensation = true;
+            
+            if (compensation === 'paid') {
+                matchesCompensation = compensationText.includes('$');
+            } else if (compensation === 'certificate') {
+                matchesCompensation = compensationText.includes('certificate') && !compensationText.includes('$');
+            } else if (compensation === 'both') {
+                matchesCompensation = compensationText.includes('certificate') && compensationText.includes('$');
+            }
+            
+            if (matchesSearch && matchesCategory && matchesCompensation) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // View all projects button
+    document.querySelector('.view-all-btn').addEventListener('click', () => {
+        alert('In a full implementation, this would show all available projects');
+    });
+
+    // View details buttons
+    document.querySelectorAll('.view-details-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const projectTitle = e.target.closest('.project-card').querySelector('h3').textContent;
+            alert(`Viewing details for: ${projectTitle}\nIn a full implementation, this would show a detailed project page.`);
+        });
+    });
+</script>
 </body>
 </html>
