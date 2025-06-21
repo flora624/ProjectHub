@@ -1280,6 +1280,236 @@
 
         // Initialize filter on page load
         filterProjects();
+        /****** POST PROJECT FORM CODE START ******/
+function showPostProjectForm() {
+    document.getElementById('modal-title').textContent = 'Post a New Project';
+    document.getElementById('modal-content').innerHTML = `
+        <form id="post-project-form" class="space-y-4">
+            <div>
+                <label for="project-title" class="block text-sm font-medium text-gray-700">Project Title*</label>
+                <input type="text" id="project-title" required 
+                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                <div id="project-title-error" class="error-message hidden">Please enter a project title</div>
+            </div>
+            
+            <div>
+                <label for="project-description" class="block text-sm font-medium text-gray-700">Description*</label>
+                <textarea id="project-description" rows="4" required
+                          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                <div id="project-description-error" class="error-message hidden">Please enter a project description</div>
+            </div>
+            
+            <div>
+                <label for="project-domain" class="block text-sm font-medium text-gray-700">Domain*</label>
+                <select id="project-domain" required
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="">Select a domain</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="Mobile Development">Mobile Development</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                    <option value="Machine Learning">Machine Learning</option>
+                    <option value="UI/UX Design">UI/UX Design</option>
+                    <option value="Graphic Design">Graphic Design</option>
+                    <option value="Digital Marketing">Digital Marketing</option>
+                    <option value="Content Writing">Content Writing</option>
+                    <option value="Video Editing">Video Editing</option>
+                    <option value="Game Development">Game Development</option>
+                    <option value="Blockchain">Blockchain</option>
+                    <option value="Cybersecurity">Cybersecurity</option>
+                    <option value="Cloud Computing">Cloud Computing</option>
+                    <option value="DevOps">DevOps</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div id="project-domain-error" class="error-message hidden">Please select a domain</div>
+            </div>
+            
+            <div>
+                <label for="project-skills" class="block text-sm font-medium text-gray-700">Required Skills (comma separated)</label>
+                <input type="text" id="project-skills" 
+                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                       placeholder="e.g., JavaScript, Python, React">
+            </div>
+            
+            <div>
+                <label for="project-compensation" class="block text-sm font-medium text-gray-700">Compensation Type*</label>
+                <select id="project-compensation" required
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="">Select compensation type</option>
+                    <option value="paid">Paid</option>
+                    <option value="certificate">Certificate/Experience</option>
+                    <option value="both">Both Paid and Certificate</option>
+                    <option value="volunteer">Volunteer (No compensation)</option>
+                </select>
+                <div id="project-compensation-error" class="error-message hidden">Please select compensation type</div>
+            </div>
+            
+            <div id="payment-details" class="hidden">
+                <label for="project-budget" class="block text-sm font-medium text-gray-700">Budget Range</label>
+                <input type="text" id="project-budget" 
+                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                       placeholder="e.g., $500 - $1000">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Project Resources (Optional)</label>
+                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                    <div class="space-y-1 text-center">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="flex text-sm text-gray-600">
+                            <label for="project-files" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                <span>Upload files</span>
+                                <input id="project-files" name="project-files" type="file" class="sr-only" multiple>
+                            </label>
+                            <p class="pl-1">or drag and drop</p>
+                        </div>
+                        <p class="text-xs text-gray-500">
+                            PDF, DOC, PPT, ZIP up to 10MB
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center">
+                <input id="project-terms" name="project-terms" type="checkbox" required 
+                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                <label for="project-terms" class="ml-2 block text-sm text-gray-700">
+                    I confirm that this is a legitimate project and agree to the 
+                    <a href="#" class="text-indigo-600 hover:text-indigo-500">terms and conditions</a>
+                </label>
+            </div>
+            
+            <div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <span id="post-project-btn-text">Post Project</span>
+                    <span id="post-project-spinner" class="loading hidden ml-2"></span>
+                </button>
+            </div>
+        </form>
+    `;
+
+    // Show/hide budget field based on compensation type
+    document.getElementById('project-compensation').addEventListener('change', function() {
+        const paymentDetails = document.getElementById('payment-details');
+        if (this.value === 'paid' || this.value === 'both') {
+            paymentDetails.classList.remove('hidden');
+        } else {
+            paymentDetails.classList.add('hidden');
+        }
+    });
+
+    // Handle file upload display
+    document.getElementById('project-files').addEventListener('change', function(e) {
+        if (this.files.length > 0) {
+            const uploadArea = this.closest('.border-dashed');
+            uploadArea.classList.remove('border-gray-300');
+            uploadArea.classList.add('border-indigo-300', 'bg-indigo-50');
+        }
+    });
+}
+
+// Update the Post Project button click handler
+document.querySelectorAll('.post-project-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // For now we'll assume user is signed in
+        // In a real app, you'd check if user is logged in
+        const isSignedIn = true;
+        
+        if (isSignedIn) {
+            showPostProjectForm();
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        } else {
+            showSignInForm();
+            document.getElementById('modal-content').insertAdjacentHTML('afterbegin', 
+                '<div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4">' +
+                '<div class="flex">' +
+                '<div class="flex-shrink-0">' +
+                '<i class="fas fa-info-circle text-blue-400"></i>' +
+                '</div>' +
+                '<div class="ml-3">' +
+                '<p class="text-sm text-blue-700">Please sign in to post a project</p>' +
+                '</div>' +
+                '</div>' +
+                '</div>'
+            );
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+    });
+});
+
+// Add form submission handling
+document.addEventListener('submit', function(e) {
+    if (e.target.id === 'post-project-form') {
+        e.preventDefault();
+        
+        // Show loading state
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const btnText = submitBtn.querySelector('#post-project-btn-text');
+        const spinner = submitBtn.querySelector('#post-project-spinner');
+        
+        btnText.textContent = 'Posting...';
+        spinner.classList.remove('hidden');
+        submitBtn.disabled = true;
+        
+        // Reset errors
+        document.querySelectorAll('.error-message').forEach(el => {
+            el.classList.add('hidden');
+        });
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            input.classList.remove('input-error');
+        });
+        
+        // Validate form
+        let isValid = true;
+        const requiredFields = [
+            'project-title', 
+            'project-description', 
+            'project-domain',
+            'project-compensation'
+        ];
+        
+        requiredFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (!field.value) {
+                document.getElementById(`${fieldId}-error`).classList.remove('hidden');
+                field.classList.add('input-error');
+                isValid = false;
+            }
+        });
+        
+        // Validate terms checkbox
+        if (!document.getElementById('project-terms').checked) {
+            isValid = false;
+        }
+        
+        if (isValid) {
+            // Simulate API call
+            setTimeout(() => {
+                alert('Project posted successfully!');
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                
+                // Reset form
+                e.target.reset();
+                btnText.textContent = 'Post Project';
+                spinner.classList.add('hidden');
+                submitBtn.disabled = false;
+            }, 1500);
+        } else {
+            // Hide loading state if validation fails
+            btnText.textContent = 'Post Project';
+            spinner.classList.add('hidden');
+            submitBtn.disabled = false;
+        }
+    }
+});
+/****** POST PROJECT FORM CODE END ******/
     </script>
 </body>
 </html>
