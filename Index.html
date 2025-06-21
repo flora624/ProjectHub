@@ -54,6 +54,25 @@
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .video-modal {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .video-container {
+            width: 80%;
+            max-width: 800px;
+        }
     </style>
 </head>
 <body class="font-sans antialiased text-gray-800">
@@ -116,10 +135,10 @@
                         Find Projects
                         <i class="fas fa-arrow-right ml-2"></i>
                     </a>
-                    <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-800 bg-opacity-60 hover:bg-opacity-70">
+                    <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-800 bg-opacity-60 hover:bg-opacity-70 watch-video-btn">
                         <i class="fas fa-play mr-2"></i>
                         Watch Video
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -173,6 +192,8 @@
                             <option value="Web Development">Web Development</option>
                             <option value="Data Science">Data Science</option>
                             <option value="UI/UX Design">UI/UX Design</option>
+                            <option value="Mobile Development">Mobile Development</option>
+                            <option value="Marketing">Marketing</option>
                         </select>
                         <select id="project-compensation" class="px-4 py-2 border rounded-md">
                             <option value="">Any Compensation</option>
@@ -180,13 +201,16 @@
                             <option value="certificate">Certificate</option>
                             <option value="both">Both</option>
                         </select>
+                        <button id="reset-filters" class="px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+                            Reset
+                        </button>
                     </div>
                 </div>
             </div>
 
             <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 <!-- Project Card 1 -->
-                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out">
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out" data-category="Web Development" data-compensation="paid">
                     <div class="p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
@@ -214,7 +238,7 @@
                 </div>
 
                 <!-- Project Card 2 -->
-                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out">
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out" data-category="Data Science" data-compensation="both">
                     <div class="p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
@@ -242,7 +266,7 @@
                 </div>
 
                 <!-- Project Card 3 -->
-                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out">
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out" data-category="UI/UX Design" data-compensation="both">
                     <div class="p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
@@ -264,6 +288,90 @@
                         </div>
                         <div class="mt-6 flex justify-between items-center">
                             <span class="text-sm font-medium text-gray-900">Certificate + $400</span>
+                            <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium view-details-btn">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 -->
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out" data-category="Mobile Development" data-compensation="paid">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">AppVenture</div>
+                                <div class="text-sm text-gray-500">Posted 5 days ago</div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">React Native Mobile App</h3>
+                            <p class="mt-2 text-gray-600">Develop a cross-platform mobile app using React Native. Experience with Firebase backend preferred.</p>
+                        </div>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Mobile Development</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">React Native</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Firebase</span>
+                        </div>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-900">$800 - $1,500</span>
+                            <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium view-details-btn">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 5 -->
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out" data-category="Marketing" data-compensation="certificate">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">MarketGrow</div>
+                                <div class="text-sm text-gray-500">Posted 1 day ago</div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Social Media Marketing</h3>
+                            <p class="mt-2 text-gray-600">Develop and implement a social media strategy for our new product launch. Experience with Instagram and TikTok required.</p>
+                        </div>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Marketing</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Social Media</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Content Creation</span>
+                        </div>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-900">Certificate + Reference</span>
+                            <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium view-details-btn">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 6 -->
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out" data-category="Web Development" data-compensation="paid">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">WebCraft</div>
+                                <div class="text-sm text-gray-500">Posted 2 weeks ago</div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold text-gray-900">WordPress Website Redesign</h3>
+                            <p class="mt-2 text-gray-600">Redesign our company website using WordPress with a custom theme. Experience with Elementor preferred.</p>
+                        </div>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">Web Development</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">WordPress</span>
+                            <span class="tag px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">Elementor</span>
+                        </div>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-900">$400 - $800</span>
                             <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium view-details-btn">View Details</button>
                         </div>
                     </div>
@@ -532,11 +640,12 @@
                     <div class="mt-4">
                         <p class="text-gray-400">Subscribe to our newsletter</p>
                         <div class="mt-2 flex">
-                            <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-md w-full text-gray-800">
-                            <button class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-r-md">
+                            <input type="email" id="newsletter-email" placeholder="Your email" class="px-4 py-2 rounded-l-md w-full text-gray-800">
+                            <button id="newsletter-submit" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-r-md">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
                         </div>
+                        <div id="newsletter-message" class="mt-2 text-sm hidden"></div>
                     </div>
                 </div>
             </div>
@@ -546,7 +655,7 @@
         </div>
     </footer>
 
-    <!-- Modal -->
+    <!-- Auth Modal -->
     <div id="modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
         <div class="bg-white rounded-lg shadow-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4">
@@ -561,6 +670,18 @@
         </div>
     </div>
 
+    <!-- Video Modal -->
+    <div id="video-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden z-50 video-modal">
+        <div class="video-container relative">
+            <button id="close-video" class="absolute -top-10 right-0 text-white hover:text-gray-300">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            <div class="aspect-w-16 aspect-h-9">
+                <iframe id="video-iframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -571,10 +692,21 @@
             if (isHidden) {
                 mobileMenu.classList.remove('hidden');
                 mobileMenuButton.innerHTML = '<i class="fas fa-times"></i>';
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
             } else {
                 mobileMenu.classList.add('hidden');
                 mobileMenuButton.innerHTML = '<i class="fas fa-bars"></i>';
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
             }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.innerHTML = '<i class="fas fa-bars"></i>';
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            });
         });
 
         // Smooth scrolling for anchor links
@@ -591,29 +723,49 @@
                         behavior: 'smooth'
                     });
                     
+                    // Update URL without page jump
+                    history.pushState(null, null, targetId);
+                    
                     // Close mobile menu if open
                     if (!mobileMenu.classList.contains('hidden')) {
                         mobileMenu.classList.add('hidden');
                         mobileMenuButton.innerHTML = '<i class="fas fa-bars"></i>';
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
                     }
                 }
             });
         });
 
-        // Project card hover effects
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transition = 'all 0.3s ease';
+        // Highlight active navigation link based on scroll position
+        const sections = document.querySelectorAll('section[id], div[id]');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
             });
             
-            card.addEventListener('click', () => {
-                // In a real implementation, this would navigate to project details
-                alert('This would navigate to project details page in a full implementation');
+            navLinks.forEach(link => {
+                link.classList.remove('border-indigo-500', 'text-gray-900');
+                link.classList.add('border-transparent', 'text-gray-500');
+                
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.remove('border-transparent', 'text-gray-500');
+                    link.classList.add('border-indigo-500', 'text-gray-900');
+                }
             });
         });
 
         // Modal handling
         const modal = document.getElementById('modal');
+        const videoModal = document.getElementById('video-modal');
         
         // Open modal for sign-up/post project buttons
         document.querySelectorAll('.sign-up-student-btn, .sign-up-company-btn, .post-project-btn, .sign-in-btn').forEach(button => {
@@ -631,7 +783,35 @@
                 }
                 
                 modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
             });
+        });
+
+        // Show video modal
+        document.querySelector('.watch-video-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            const videoIframe = document.getElementById('video-iframe');
+            videoIframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1'; // Replace with your actual video URL
+            videoModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Close video modal
+        document.getElementById('close-video').addEventListener('click', () => {
+            const videoIframe = document.getElementById('video-iframe');
+            videoIframe.src = '';
+            videoModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close video modal when clicking outside
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                const videoIframe = document.getElementById('video-iframe');
+                videoIframe.src = '';
+                videoModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
         });
 
         // Show sign in form
@@ -645,297 +825,461 @@
                         <div id="login-email-error" class="error-message hidden">Please enter a valid email</div>
                     </div>
                     <div>
-                                            <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" id="login-password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                    <div id="login-password-error" class="error-message hidden">Password must be at least 6 characters</div>
+                        <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="login-password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <div id="login-password-error" class="error-message hidden">Password must be at least 6 characters</div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                        </div>
+                        <div class="text-sm">
+                            <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <span id="login-btn-text">Sign In</span>
+                            <span id="login-spinner" class="loading hidden ml-2"></span>
+                        </button>
+                    </div>
+                    <div class="text-sm text-center">
+                        <span class="text-gray-600">Don't have an account? </span>
+                        <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500 switch-to-signup">Sign up</button>
+                    </div>
+                </form>
+            `;
+            
+            // Add event listener to the switch button
+            document.querySelector('.switch-to-signup')?.addEventListener('click', () => {
+                showSignUpForm();
+            });
+        }
+
+        // Show sign up form
+        function showSignUpForm(isCompany = false) {
+            const title = isCompany ? 'Company Sign Up' : 'Student Sign Up';
+            document.getElementById('modal-title').textContent = title;
+            
+            const companyFields = isCompany ? `
+                <div>
+                    <label for="company-name" class="block text-sm font-medium text-gray-700">Company Name</label>
+                    <input type="text" id="company-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <div id="company-name-error" class="error-message hidden">Please enter your company name</div>
                 </div>
-                <div class="flex items-center justify-between">
+                <div>
+                    <label for="industry" class="block text-sm font-medium text-gray-700">Industry</label>
+                    <select id="industry" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Select industry</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Education">Education</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            ` : `
+                <div>
+                    <label for="university" class="block text-sm font-medium text-gray-700">University</label>
+                    <input type="text" id="university" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <div id="university-error" class="error-message hidden">Please enter your university</div>
+                </div>
+                <div>
+                    <label for="major" class="block text-sm font-medium text-gray-700">Major</label>
+                    <input type="text" id="major" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <div id="major-error" class="error-message hidden">Please enter your major</div>
+                </div>
+                <div>
+                    <label for="skills" class="block text-sm font-medium text-gray-700">Skills (comma separated)</label>
+                    <input type="text" id="skills" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., JavaScript, Python, UI Design">
+                </div>
+            `;
+
+            document.getElementById('modal-content').innerHTML = `
+                <form id="signup-form" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="first-name" class="block text-sm font-medium text-gray-700">First Name</label>
+                            <input type="text" id="first-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <div id="first-name-error" class="error-message hidden">Please enter your first name</div>
+                        </div>
+                        <div>
+                            <label for="last-name" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            <input type="text" id="last-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <div id="last-name-error" class="error-message hidden">Please enter your last name</div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <div id="email-error" class="error-message hidden">Please enter a valid email</div>
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <div id="password-error" class="error-message hidden">Password must be at least 8 characters</div>
+                    </div>
+                    ${companyFields}
                     <div class="flex items-center">
-                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
-                    </div>
-                    <div class="text-sm">
-                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot password?</a>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Sign In
-                    </button>
-                </div>
-                <div class="text-sm text-center">
-                    <span class="text-gray-600">Don't have an account? </span>
-                    <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500 switch-to-signup">Sign up</button>
-                </div>
-            </form>
-        `;
-    }
-
-    // Show sign up form
-    function showSignUpForm(isCompany = false) {
-        const title = isCompany ? 'Company Sign Up' : 'Student Sign Up';
-        document.getElementById('modal-title').textContent = title;
-        
-        const companyFields = isCompany ? `
-            <div>
-                <label for="company-name" class="block text-sm font-medium text-gray-700">Company Name</label>
-                <input type="text" id="company-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                <div id="company-name-error" class="error-message hidden">Please enter your company name</div>
-            </div>
-            <div>
-                <label for="industry" class="block text-sm font-medium text-gray-700">Industry</label>
-                <select id="industry" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                    <option value="">Select industry</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Healthcare">Healthcare</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Education">Education</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-        ` : `
-            <div>
-                <label for="university" class="block text-sm font-medium text-gray-700">University</label>
-                <input type="text" id="university" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                <div id="university-error" class="error-message hidden">Please enter your university</div>
-            </div>
-            <div>
-                <label for="major" class="block text-sm font-medium text-gray-700">Major</label>
-                <input type="text" id="major" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                <div id="major-error" class="error-message hidden">Please enter your major</div>
-            </div>
-            <div>
-                <label for="skills" class="block text-sm font-medium text-gray-700">Skills (comma separated)</label>
-                <input type="text" id="skills" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., JavaScript, Python, UI Design">
-            </div>
-        `;
-
-        document.getElementById('modal-content').innerHTML = `
-            <form id="signup-form" class="space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label for="first-name" class="block text-sm font-medium text-gray-700">First Name</label>
-                        <input type="text" id="first-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                        <div id="first-name-error" class="error-message hidden">Please enter your first name</div>
+                        <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <label for="terms" class="ml-2 block text-sm text-gray-700">I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-500">terms and conditions</a></label>
                     </div>
                     <div>
-                        <label for="last-name" class="block text-sm font-medium text-gray-700">Last Name</label>
-                        <input type="text" id="last-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                        <div id="last-name-error" class="error-message hidden">Please enter your last name</div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <span id="signup-btn-text">Sign Up</span>
+                            <span id="signup-spinner" class="loading hidden ml-2"></span>
+                        </button>
                     </div>
-                </div>
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                    <div id="email-error" class="error-message hidden">Please enter a valid email</div>
-                </div>
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" id="password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                    <div id="password-error" class="error-message hidden">Password must be at least 8 characters</div>
-                </div>
-                ${companyFields}
-                <div class="flex items-center">
-                    <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                    <label for="terms" class="ml-2 block text-sm text-gray-700">I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-500">terms and conditions</a></label>
-                </div>
-                <div>
-                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Sign Up
-                    </button>
-                </div>
-                <div class="text-sm text-center">
-                    <span class="text-gray-600">Already have an account? </span>
-                    <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500 switch-to-signin">Sign in</button>
-                </div>
-            </form>
-        `;
+                    <div class="text-sm text-center">
+                        <span class="text-gray-600">Already have an account? </span>
+                        <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500 switch-to-signin">Sign in</button>
+                    </div>
+                </form>
+            `;
 
-        // Add event listeners to the switch buttons
-        document.querySelector('.switch-to-signin')?.addEventListener('click', () => {
-            showSignInForm();
-        });
+            // Add event listeners to the switch buttons
+            document.querySelector('.switch-to-signin')?.addEventListener('click', () => {
+                showSignInForm();
+            });
+        }
 
-        document.querySelector('.switch-to-signup')?.addEventListener('click', () => {
-            showSignUpForm();
-        });
-    }
-
-    // Close modal
-    document.getElementById('close-modal').addEventListener('click', () => {
-        modal.classList.add('hidden');
-    });
-
-    // Close modal when clicking outside
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
+        // Close modal
+        document.getElementById('close-modal').addEventListener('click', () => {
             modal.classList.add('hidden');
-        }
-    });
+            document.body.style.overflow = 'auto';
+        });
 
-    // Form validation for sign up
-    document.addEventListener('submit', (e) => {
-        if (e.target.id === 'signup-form') {
-            e.preventDefault();
-            
-            let isValid = true;
-            const email = document.getElementById('email');
-            const password = document.getElementById('password');
-            const firstName = document.getElementById('first-name');
-            const lastName = document.getElementById('last-name');
-            
-            // Reset errors
-            document.querySelectorAll('.error-message').forEach(el => {
-                el.classList.add('hidden');
-            });
-            document.querySelectorAll('input').forEach(input => {
-                input.classList.remove('input-error');
-            });
-            
-            // Validate email
-            if (!email.value || !email.value.includes('@')) {
-                document.getElementById('email-error').classList.remove('hidden');
-                email.classList.add('input-error');
-                isValid = false;
-            }
-            
-            // Validate password
-            if (!password.value || password.value.length < 8) {
-                document.getElementById('password-error').classList.remove('hidden');
-                password.classList.add('input-error');
-                isValid = false;
-            }
-            
-            // Validate first name
-            if (!firstName.value) {
-                document.getElementById('first-name-error').classList.remove('hidden');
-                firstName.classList.add('input-error');
-                isValid = false;
-            }
-            
-            // Validate last name
-            if (!lastName.value) {
-                document.getElementById('last-name-error').classList.remove('hidden');
-                lastName.classList.add('input-error');
-                isValid = false;
-            }
-            
-            // Additional validation for company/student fields
-            if (document.getElementById('company-name') && !document.getElementById('company-name').value) {
-                document.getElementById('company-name-error').classList.remove('hidden');
-                document.getElementById('company-name').classList.add('input-error');
-                isValid = false;
-            }
-            
-            if (document.getElementById('university') && !document.getElementById('university').value) {
-                document.getElementById('university-error').classList.remove('hidden');
-                document.getElementById('university').classList.add('input-error');
-                isValid = false;
-            }
-            
-            if (document.getElementById('major') && !document.getElementById('major').value) {
-                document.getElementById('major-error').classList.remove('hidden');
-                document.getElementById('major').classList.add('input-error');
-                isValid = false;
-            }
-            
-            if (isValid) {
-                // In a real app, you would submit the form here
-                alert('Form submitted successfully!');
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
                 modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
             }
-        }
-        
-        if (e.target.id === 'login-form') {
-            e.preventDefault();
-            
-            let isValid = true;
-            const email = document.getElementById('login-email');
-            const password = document.getElementById('login-password');
-            
-            // Reset errors
-            document.querySelectorAll('.error-message').forEach(el => {
-                el.classList.add('hidden');
-            });
-            document.querySelectorAll('input').forEach(input => {
-                input.classList.remove('input-error');
-            });
-            
-            // Validate email
-            if (!email.value || !email.value.includes('@')) {
-                document.getElementById('login-email-error').classList.remove('hidden');
-                email.classList.add('input-error');
-                isValid = false;
-            }
-            
-            // Validate password
-            if (!password.value || password.value.length < 6) {
-                document.getElementById('login-password-error').classList.remove('hidden');
-                password.classList.add('input-error');
-                isValid = false;
-            }
-            
-            if (isValid) {
-                // In a real app, you would submit the form here
-                alert('Logged in successfully!');
-                modal.classList.add('hidden');
-            }
-        }
-    });
+        });
 
-    // Project search functionality
-    const projectSearch = document.getElementById('project-search');
-    const projectCategory = document.getElementById('project-category');
-    const projectCompensation = document.getElementById('project-compensation');
-    
-    [projectSearch, projectCategory, projectCompensation].forEach(element => {
-        element.addEventListener('change', filterProjects);
-    });
-    
-    function filterProjects() {
-        const searchTerm = projectSearch.value.toLowerCase();
-        const category = projectCategory.value;
-        const compensation = projectCompensation.value;
+        // Form validation for sign up
+        document.addEventListener('submit', (e) => {
+            if (e.target.id === 'signup-form') {
+                e.preventDefault();
+                
+                // Show loading state
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                const btnText = submitBtn.querySelector('#signup-btn-text');
+                const spinner = submitBtn.querySelector('#signup-spinner');
+                
+                btnText.textContent = 'Processing...';
+                spinner.classList.remove('hidden');
+                submitBtn.disabled = true;
+                
+                let isValid = true;
+                const email = document.getElementById('email');
+                const password = document.getElementById('password');
+                const firstName = document.getElementById('first-name');
+                const lastName = document.getElementById('last-name');
+                
+                // Reset errors
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.classList.add('hidden');
+                });
+                document.querySelectorAll('input').forEach(input => {
+                    input.classList.remove('input-error');
+                });
+                
+                // Validate email
+                if (!email.value || !email.value.includes('@')) {
+                    document.getElementById('email-error').classList.remove('hidden');
+                    email.classList.add('input-error');
+                    isValid = false;
+                }
+                
+                // Validate password
+                if (!password.value || password.value.length < 8) {
+                    document.getElementById('password-error').classList.remove('hidden');
+                    password.classList.add('input-error');
+                    isValid = false;
+                }
+                
+                // Validate first name
+                if (!firstName.value) {
+                    document.getElementById('first-name-error').classList.remove('hidden');
+                    firstName.classList.add('input-error');
+                    isValid = false;
+                }
+                
+                // Validate last name
+                if (!lastName.value) {
+                    document.getElementById('last-name-error').classList.remove('hidden');
+                    lastName.classList.add('input-error');
+                    isValid = false;
+                }
+                
+                // Additional validation for company/student fields
+                if (document.getElementById('company-name') && !document.getElementById('company-name').value) {
+                    document.getElementById('company-name-error').classList.remove('hidden');
+                    document.getElementById('company-name').classList.add('input-error');
+                    isValid = false;
+                }
+                
+                if (document.getElementById('university') && !document.getElementById('university').value) {
+                    document.getElementById('university-error').classList.remove('hidden');
+                    document.getElementById('university').classList.add('input-error');
+                    isValid = false;
+                }
+                
+                if (document.getElementById('major') && !document.getElementById('major').value) {
+                    document.getElementById('major-error').classList.remove('hidden');
+                    document.getElementById('major').classList.add('input-error');
+                    isValid = false;
+                }
+                
+                // Validate terms checkbox
+                if (!document.getElementById('terms').checked) {
+                    isValid = false;
+                    // You might want to show an error for terms as well
+                }
+                
+                if (isValid) {
+                    // Simulate API call
+                    setTimeout(() => {
+                        // In a real app, you would submit the form here
+                        alert('Account created successfully!');
+                        modal.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                        
+                        // Reset form
+                        e.target.reset();
+                        btnText.textContent = 'Sign Up';
+                        spinner.classList.add('hidden');
+                        submitBtn.disabled = false;
+                    }, 1500);
+                } else {
+                    // Hide loading state if validation fails
+                    btnText.textContent = 'Sign Up';
+                    spinner.classList.add('hidden');
+                    submitBtn.disabled = false;
+                }
+            }
+            
+            if (e.target.id === 'login-form') {
+                e.preventDefault();
+                
+                // Show loading state
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                const btnText = submitBtn.querySelector('#login-btn-text');
+                const spinner = submitBtn.querySelector('#login-spinner');
+                
+                btnText.textContent = 'Signing in...';
+                spinner.classList.remove('hidden');
+                submitBtn.disabled = true;
+                
+                let isValid = true;
+                const email = document.getElementById('login-email');
+                const password = document.getElementById('login-password');
+                
+                // Reset errors
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.classList.add('hidden');
+                });
+                document.querySelectorAll('input').forEach(input => {
+                    input.classList.remove('input-error');
+                });
+                
+                // Validate email
+                if (!email.value || !email.value.includes('@')) {
+                    document.getElementById('login-email-error').classList.remove('hidden');
+                    email.classList.add('input-error');
+                    isValid = false;
+                }
+                
+                // Validate password
+                if (!password.value || password.value.length < 6) {
+                    document.getElementById('login-password-error').classList.remove('hidden');
+                    password.classList.add('input-error');
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    // Simulate API call
+                    setTimeout(() => {
+                        // In a real app, you would submit the form here
+                        alert('Logged in successfully!');
+                        modal.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                        
+                        // Reset form
+                        e.target.reset();
+                        btnText.textContent = 'Sign In';
+                        spinner.classList.add('hidden');
+                        submitBtn.disabled = false;
+                    }, 1500);
+                } else {
+                    // Hide loading state if validation fails
+                    btnText.textContent = 'Sign In';
+                    spinner.classList.add('hidden');
+                    submitBtn.disabled = false;
+                }
+            }
+        });
+
+        // Project search functionality
+        const projectSearch = document.getElementById('project-search');
+        const projectCategory = document.getElementById('project-category');
+        const projectCompensation = document.getElementById('project-compensation');
+        const resetFilters = document.getElementById('reset-filters');
         
+        [projectSearch, projectCategory, projectCompensation].forEach(element => {
+            element.addEventListener('change', filterProjects);
+        });
+        
+        resetFilters.addEventListener('click', () => {
+            projectSearch.value = '';
+            projectCategory.value = '';
+            projectCompensation.value = '';
+            filterProjects();
+        });
+        
+        function filterProjects() {
+            const searchTerm = projectSearch.value.toLowerCase();
+            const category = projectCategory.value;
+            const compensation = projectCompensation.value;
+            
+            document.querySelectorAll('.project-card').forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent);
+                const compensationText = card.querySelector('div:last-child > span').textContent.toLowerCase();
+                const cardCategory = card.getAttribute('data-category');
+                const cardCompensation = card.getAttribute('data-compensation');
+                
+                const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+                const matchesCategory = !category || cardCategory === category;
+                let matchesCompensation = true;
+                
+                if (compensation === 'paid') {
+                    matchesCompensation = cardCompensation === 'paid';
+                } else if (compensation === 'certificate') {
+                    matchesCompensation = cardCompensation === 'certificate';
+                } else if (compensation === 'both') {
+                    matchesCompensation = cardCompensation === 'both';
+                }
+                
+                if (matchesSearch && matchesCategory && matchesCompensation) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // View all projects button
+        document.querySelector('.view-all-btn').addEventListener('click', () => {
+            // In a real implementation, this would show all available projects
+            alert('Loading all available projects...');
+            
+            // Simulate loading
+            const button = document.querySelector('.view-all-btn');
+            const originalText = button.innerHTML;
+            button.disabled = true;
+            button.innerHTML = '<span class="loading mr-2"></span> Loading...';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.disabled = false;
+                // Here you would typically load more projects via AJAX
+            }, 1500);
+        });
+
+        // View details buttons
+        document.querySelectorAll('.view-details-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const projectTitle = e.target.closest('.project-card').querySelector('h3').textContent;
+                
+                // Show project details in modal
+                document.getElementById('modal-title').textContent = projectTitle;
+                document.getElementById('modal-content').innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <img class="h-10 w-10 rounded-full" src="${e.target.closest('.project-card').querySelector('img').src}" alt="">
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${e.target.closest('.project-card').querySelector('div.ml-4 > div:first-child').textContent}</div>
+                                <div class="text-sm text-gray-500">${e.target.closest('.project-card').querySelector('div.ml-4 > div:last-child').textContent}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-900">Project Description</h4>
+                            <p class="mt-2 text-gray-600">${e.target.closest('.project-card').querySelector('p').textContent}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-900">Skills Required</h4>
+                            <div class="mt-2 flex flex-wrap gap-2">
+                                ${Array.from(e.target.closest('.project-card').querySelectorAll('.tag')).map(tag => tag.outerHTML).join('')}
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-medium text-gray-900">${e.target.closest('.project-card').querySelector('div:last-child > span').textContent}</span>
+                            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium apply-project-btn">
+                                Apply Now
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                
+                // Add event listener to the apply button
+                document.querySelector('.apply-project-btn')?.addEventListener('click', () => {
+                    alert(`Application submitted for: ${projectTitle}`);
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+        });
+
+        // Project card hover effects
         document.querySelectorAll('.project-card').forEach(card => {
-            const title = card.querySelector('h3').textContent.toLowerCase();
-            const description = card.querySelector('p').textContent.toLowerCase();
-            const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent);
-            const compensationText = card.querySelector('div:last-child > span').textContent.toLowerCase();
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'all 0.3s ease';
+            });
             
-            const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
-            const matchesCategory = !category || tags.includes(category);
-            let matchesCompensation = true;
+            card.addEventListener('click', () => {
+                const viewDetailsBtn = card.querySelector('.view-details-btn');
+                viewDetailsBtn.click();
+            });
+        });
+
+        // Newsletter subscription
+        document.getElementById('newsletter-submit').addEventListener('click', (e) => {
+            e.preventDefault();
+            const emailInput = document.getElementById('newsletter-email');
+            const messageDiv = document.getElementById('newsletter-message');
             
-            if (compensation === 'paid') {
-                matchesCompensation = compensationText.includes('$');
-            } else if (compensation === 'certificate') {
-                matchesCompensation = compensationText.includes('certificate') && !compensationText.includes('$');
-            } else if (compensation === 'both') {
-                matchesCompensation = compensationText.includes('certificate') && compensationText.includes('$');
+            if (!emailInput.value || !emailInput.value.includes('@')) {
+                messageDiv.textContent = 'Please enter a valid email address';
+                messageDiv.classList.remove('hidden', 'text-green-500');
+                messageDiv.classList.add('text-red-500');
+                return;
             }
             
-            if (matchesSearch && matchesCategory && matchesCompensation) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
+            // Simulate API call
+            const submitBtn = document.getElementById('newsletter-submit');
+            submitBtn.innerHTML = '<span class="loading"></span>';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                messageDiv.textContent = 'Thank you for subscribing!';
+                messageDiv.classList.remove('hidden', 'text-red-500');
+                messageDiv.classList.add('text-green-500');
+                emailInput.value = '';
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
+                submitBtn.disabled = false;
+            }, 1500);
         });
-    }
 
-    // View all projects button
-    document.querySelector('.view-all-btn').addEventListener('click', () => {
-        alert('In a full implementation, this would show all available projects');
-    });
-
-    // View details buttons
-    document.querySelectorAll('.view-details-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const projectTitle = e.target.closest('.project-card').querySelector('h3').textContent;
-            alert(`Viewing details for: ${projectTitle}\nIn a full implementation, this would show a detailed project page.`);
-        });
-    });
-</script>
+        // Initialize filter on page load
+        filterProjects();
+    </script>
 </body>
 </html>
