@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProjectHub - Connect Students with Real-World Projects</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,6 +12,7 @@
         }
         .project-card:hover {
             transform: translateY(-5px);
+            transition: transform 0.3s ease;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         .tag {
@@ -20,10 +21,6 @@
         .tag:hover {
             background-color: #4f46e5;
             color: white;
-        }
-        .animated-underline {
-            position: relative;
-            display: inline-block;
         }
         .animated-underline::after {
             content: '';
@@ -76,7 +73,7 @@
     </style>
 </head>
 <body class="font-sans antialiased text-gray-800">
-       <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -97,7 +94,7 @@
                     <button class="text-indigo-600 hover:text-indigo-800 px-4 py-2 rounded-md text-sm font-medium sign-in-btn">Sign In</button>
                 </div>
                 <div class="-mr-2 flex items-center sm:hidden">
-                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 mobile-menu-button">
                         <span class="sr-only">Open main menu</span>
                         <i class="fas fa-bars"></i>
                     </button>
@@ -614,9 +611,9 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">For Students</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Browse Projects</a></li>
+                        <li><a href="#projects" class="text-gray-400 hover:text-white">Browse Projects</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white">Create Profile</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Success Stories</a></li>
+                        <li><a href="#testimonials" class="text-gray-400 hover:text-white">Success Stories</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
                     </ul>
                 </div>
@@ -683,232 +680,648 @@
     </div>
 
     <script>
-     // ========== PROJECT DETAILS ==========
-document.querySelectorAll('.view-details-btn').forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const projectCard = e.target.closest('.project-card');
-        const projectTitle = projectCard.querySelector('h3').textContent;
-        const companyName = projectCard.querySelector('div.ml-4 > div:first-child').textContent;
-        const postedDate = projectCard.querySelector('div.ml-4 > div:last-child').textContent;
-        const projectDescription = projectCard.querySelector('p').textContent;
-        const skills = Array.from(projectCard.querySelectorAll('.tag')).map(tag => tag.textContent).join(', ');
-        const compensation = projectCard.querySelector('div:last-child > span').textContent;
+        // ========== MOBILE MENU TOGGLE ==========
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
         
-        // Show project details in modal with Apply Now button
-        document.getElementById('modal-title').textContent = `Apply for: ${projectTitle}`;
-        document.getElementById('modal-content').innerHTML = `
-            <div class="space-y-4">
-                <div class="flex items-center">
-                    <img class="h-10 w-10 rounded-full" src="${projectCard.querySelector('img').src}" alt="">
-                    <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">${companyName}</div>
-                        <div class="text-sm text-gray-500">${postedDate}</div>
-                    </div>
-                </div>
-                <div>
-                    <h4 class="text-lg font-medium text-gray-900">Project Description</h4>
-                    <p class="mt-2 text-gray-600">${projectDescription}</p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-medium text-gray-900">Skills Required</h4>
-                    <p class="mt-2 text-gray-600">${skills}</p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-medium text-gray-900">Compensation</h4>
-                    <p class="mt-2 text-gray-600">${compensation}</p>
-                </div>
-                <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium show-application-form-btn">
-                    Apply Now
-                </button>
-            </div>
-        `;
-        
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-        
-        // Add event listener to the Apply Now button
-        document.querySelector('.show-application-form-btn')?.addEventListener('click', () => {
-            showApplicationForm(projectTitle, companyName);
+        mobileMenuButton.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenuButton.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.innerHTML = '<i class="fas fa-bars"></i>';
+            }
         });
-    });
-});
 
-// ========== APPLICATION FORM ==========
-function showApplicationForm(projectTitle, companyName) {
-    document.getElementById('modal-title').textContent = `Application for: ${projectTitle}`;
-    document.getElementById('modal-content').innerHTML = `
-        <form id="application-form" class="space-y-4">
-            <input type="hidden" id="project-title" value="${projectTitle}">
-            <input type="hidden" id="company-name" value="${companyName}">
-            
-            <div>
-                <label for="applicant-name" class="block text-sm font-medium text-gray-700">Full Name*</label>
-                <input type="text" id="applicant-name" required 
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            
-            <div>
-                <label for="applicant-email" class="block text-sm font-medium text-gray-700">Email*</label>
-                <input type="email" id="applicant-email" required 
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            
-            <div>
-                <label for="applicant-phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                <input type="tel" id="applicant-phone" 
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            
-            <div>
-                <label for="applicant-university" class="block text-sm font-medium text-gray-700">University/School*</label>
-                <input type="text" id="applicant-university" required 
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            
-            <div>
-                <label for="applicant-major" class="block text-sm font-medium text-gray-700">Major/Field of Study*</label>
-                <input type="text" id="applicant-major" required 
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            
-            <div>
-                <label for="applicant-skills" class="block text-sm font-medium text-gray-700">Relevant Skills*</label>
-                <textarea id="applicant-skills" rows="3" required 
-                          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                          placeholder="List the skills that make you a good fit for this project"></textarea>
-            </div>
-            
-            <div>
-                <label for="applicant-experience" class="block text-sm font-medium text-gray-700">Relevant Experience</label>
-                <textarea id="applicant-experience" rows="4" 
-                          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                          placeholder="Describe any previous projects or work experience relevant to this position"></textarea>
-            </div>
-            
-            <div>
-                <label for="applicant-why" class="block text-sm font-medium text-gray-700">Why are you interested in this project?*</label>
-                <textarea id="applicant-why" rows="3" required 
-                          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                          placeholder="Explain why you want to work on this project and what you can contribute"></textarea>
-            </div>
-            
-            <div>
-                <label for="applicant-portfolio" class="block text-sm font-medium text-gray-700">Portfolio/GitHub/LinkedIn</label>
-                <input type="url" id="applicant-portfolio" 
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                       placeholder="https://">
-            </div>
-            
-            <div class="flex items-center">
-                <input id="applicant-terms" name="applicant-terms" type="checkbox" required 
-                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                <label for="applicant-terms" class="ml-2 block text-sm text-gray-700">
-                    I confirm that the information provided is accurate
-                </label>
-            </div>
-            
-            <div class="flex space-x-4">
-                <button type="button" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm font-medium back-to-project-btn">
-                    Back to Project
-                </button>
-                <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                    Submit Application
-                </button>
-            </div>
-        </form>
-    `;
-    
-    // Back button returns to project details
-    document.querySelector('.back-to-project-btn')?.addEventListener('click', () => {
-        const projectTitle = document.getElementById('project-title').value;
-        const companyName = document.getElementById('company-name').value;
-        
-        // Re-show the project details view
-        document.getElementById('modal-title').textContent = `Apply for: ${projectTitle}`;
-        document.getElementById('modal-content').innerHTML = `
-            <div class="space-y-4">
-                <div class="flex items-center">
-                    <img class="h-10 w-10 rounded-full" src="${document.querySelector('.project-card h3').textContent === projectTitle ? 
-                        document.querySelector('.project-card h3').closest('.project-card').querySelector('img').src : ''}" alt="">
-                    <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">${companyName}</div>
-                        <div class="text-sm text-gray-500">${document.querySelector('.project-card h3').textContent === projectTitle ? 
-                            document.querySelector('.project-card h3').closest('.project-card').querySelector('div.ml-4 > div:last-child').textContent : ''}</div>
-                    </div>
-                </div>
-                <div>
-                    <h4 class="text-lg font-medium text-gray-900">Project Description</h4>
-                    <p class="mt-2 text-gray-600">${document.querySelector('.project-card h3').textContent === projectTitle ? 
-                        document.querySelector('.project-card h3').closest('.project-card').querySelector('p').textContent : ''}</p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-medium text-gray-900">Skills Required</h4>
-                    <p class="mt-2 text-gray-600">${document.querySelector('.project-card h3').textContent === projectTitle ? 
-                        Array.from(document.querySelector('.project-card h3').closest('.project-card').querySelectorAll('.tag')).map(tag => tag.textContent).join(', ') : ''}</p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-medium text-gray-900">Compensation</h4>
-                    <p class="mt-2 text-gray-600">${document.querySelector('.project-card h3').textContent === projectTitle ? 
-                        document.querySelector('.project-card h3').closest('.project-card').querySelector('div:last-child > span').textContent : ''}</p>
-                </div>
-                <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium show-application-form-btn">
-                    Apply Now
-                </button>
-            </div>
-        `;
-        
-        document.querySelector('.show-application-form-btn')?.addEventListener('click', () => {
-            showApplicationForm(projectTitle, companyName);
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.innerHTML = '<i class="fas fa-bars"></i>';
+            });
         });
-    });
-    
-    // Form submission
-    document.getElementById('application-form')?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form values
-        const formData = {
-            projectTitle: document.getElementById('project-title').value,
-            companyName: document.getElementById('company-name').value,
-            applicantName: document.getElementById('applicant-name').value,
-            applicantEmail: document.getElementById('applicant-email').value,
-            applicantPhone: document.getElementById('applicant-phone').value,
-            applicantUniversity: document.getElementById('applicant-university').value,
-            applicantMajor: document.getElementById('applicant-major').value,
-            applicantSkills: document.getElementById('applicant-skills').value,
-            applicantExperience: document.getElementById('applicant-experience').value,
-            applicantWhy: document.getElementById('applicant-why').value,
-            applicantPortfolio: document.getElementById('applicant-portfolio').value
-        };
-        
-        // Here you would typically send the data to your server
-        console.log('Application submitted:', formData);
-        
-        // Show success message
-        document.getElementById('modal-title').textContent = 'Application Submitted';
-        document.getElementById('modal-content').innerHTML = `
-            <div class="text-center py-8">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                    <i class="fas fa-check text-green-600"></i>
-                </div>
-                <h3 class="mt-4 text-lg font-medium text-gray-900">Application Successfully Submitted!</h3>
-                <p class="mt-2 text-gray-600">Your application for "${formData.projectTitle}" has been received.</p>
-                <p class="mt-1 text-gray-600">${formData.companyName} will review your application and contact you if you're selected.</p>
-                <div class="mt-6">
-                    <button type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium close-modal-btn">
-                        Close
-                    </button>
-                </div>
-            </div>
-        `;
-        
-        document.querySelector('.close-modal-btn')?.addEventListener('click', () => {
+
+        // ========== SMOOTH SCROLLING ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuButton.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                }
+            });
+        });
+
+        // ========== MODAL SYSTEM ==========
+        const modal = document.getElementById('modal');
+        const videoModal = document.getElementById('video-modal');
+
+        // Open modal for various buttons
+        document.querySelectorAll('.sign-in-btn, .sign-up-student-btn, .sign-up-company-btn, .post-project-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                if (button.classList.contains('sign-in-btn')) {
+                    showSignInForm();
+                } else if (button.classList.contains('post-project-btn')) {
+                    showPostProjectForm();
+                } else {
+                    const isCompany = button.classList.contains('sign-up-company-btn');
+                    showSignUpForm(isCompany);
+                }
+                
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal
+        document.getElementById('close-modal').addEventListener('click', () => {
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
         });
-    });
-}
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // ========== VIDEO MODAL ==========
+        document.querySelector('.watch-video-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            const videoIframe = document.getElementById('video-iframe');
+            videoIframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
+            videoModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Close video modal
+        document.getElementById('close-video').addEventListener('click', () => {
+            const videoIframe = document.getElementById('video-iframe');
+            videoIframe.src = '';
+            videoModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close video modal when clicking outside
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                const videoIframe = document.getElementById('video-iframe');
+                videoIframe.src = '';
+                videoModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // ========== AUTH FORMS ==========
+        function showSignInForm() {
+            document.getElementById('modal-title').textContent = 'Sign In';
+            document.getElementById('modal-content').innerHTML = `
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="login-email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="login-password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                        </div>
+                        <div class="text-sm">
+                            <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Sign In
+                        </button>
+                    </div>
+                    <div class="text-sm text-center">
+                        <span class="text-gray-600">Don't have an account? </span>
+                        <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500 switch-to-signup">Sign up</button>
+                    </div>
+                </form>
+            `;
+            
+            // Add switch to signup
+            document.querySelector('.switch-to-signup')?.addEventListener('click', () => {
+                showSignUpForm();
+            });
+            
+            // Form submission
+            document.getElementById('login-form')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Sign in functionality would be implemented here');
+                modal.classList.add('hidden');
+            });
+        }
+
+        function showSignUpForm(isCompany = false) {
+            const title = isCompany ? 'Company Sign Up' : 'Student Sign Up';
+            document.getElementById('modal-title').textContent = title;
+            
+            const companyFields = isCompany ? `
+                <div>
+                    <label for="company-name" class="block text-sm font-medium text-gray-700">Company Name</label>
+                    <input type="text" id="company-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="industry" class="block text-sm font-medium text-gray-700">Industry</label>
+                    <select id="industry" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Select industry</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Education">Education</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            ` : `
+                <div>
+                    <label for="university" class="block text-sm font-medium text-gray-700">University</label>
+                    <input type="text" id="university" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="major" class="block text-sm font-medium text-gray-700">Major</label>
+                    <input type="text" id="major" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="skills" class="block text-sm font-medium text-gray-700">Skills (comma separated)</label>
+                    <input type="text" id="skills" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., JavaScript, Python, UI Design">
+                </div>
+            `;
+
+            document.getElementById('modal-content').innerHTML = `
+                <form id="signup-form" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="first-name" class="block text-sm font-medium text-gray-700">First Name</label>
+                            <input type="text" id="first-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="last-name" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            <input type="text" id="last-name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    ${companyFields}
+                    <div class="flex items-center">
+                        <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <label for="terms" class="ml-2 block text-sm text-gray-700">I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-500">terms and conditions</a></label>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Sign Up
+                        </button>
+                    </div>
+                    <div class="text-sm text-center">
+                        <span class="text-gray-600">Already have an account? </span>
+                        <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500 switch-to-signin">Sign in</button>
+                    </div>
+                </form>
+            `;
+
+            // Add switch to signin
+            document.querySelector('.switch-to-signin')?.addEventListener('click', () => {
+                showSignInForm();
+            });
+            
+            // Form submission
+            document.getElementById('signup-form')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Sign up functionality would be implemented here');
+                modal.classList.add('hidden');
+            });
+        }
+
+        // ========== PROJECT FILTERS ==========
+        const projectSearch = document.getElementById('project-search');
+        const projectCategory = document.getElementById('project-category');
+        const projectCompensation = document.getElementById('project-compensation');
+        const resetFilters = document.getElementById('reset-filters');
+        
+        [projectSearch, projectCategory, projectCompensation].forEach(element => {
+            element.addEventListener('change', filterProjects);
+        });
+        
+        resetFilters.addEventListener('click', () => {
+            projectSearch.value = '';
+            projectCategory.value = '';
+            projectCompensation.value = '';
+            filterProjects();
+        });
+        
+        function filterProjects() {
+            const searchTerm = projectSearch.value.toLowerCase();
+            const category = projectCategory.value;
+            const compensation = projectCompensation.value;
+            
+            document.querySelectorAll('.project-card').forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                const cardCategory = card.getAttribute('data-category');
+                const cardCompensation = card.getAttribute('data-compensation');
+                
+                const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+                const matchesCategory = !category || cardCategory === category;
+                let matchesCompensation = true;
+                
+                if (compensation === 'paid') {
+                    matchesCompensation = cardCompensation === 'paid';
+                } else if (compensation === 'certificate') {
+                    matchesCompensation = cardCompensation === 'certificate';
+                } else if (compensation === 'both') {
+                    matchesCompensation = cardCompensation === 'both';
+                }
+                
+                if (matchesSearch && matchesCategory && matchesCompensation) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ========== VIEW ALL PROJECTS ==========
+        document.querySelector('.view-all-btn').addEventListener('click', () => {
+            alert('This would load more projects in a real implementation');
+        });
+
+        // ========== PROJECT DETAILS & APPLICATION ==========
+        document.querySelectorAll('.view-details-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const projectCard = e.target.closest('.project-card');
+                const projectTitle = projectCard.querySelector('h3').textContent;
+                const companyName = projectCard.querySelector('div.ml-4 > div:first-child').textContent;
+                const postedDate = projectCard.querySelector('div.ml-4 > div:last-child').textContent;
+                const projectDescription = projectCard.querySelector('p').textContent;
+                const skills = Array.from(projectCard.querySelectorAll('.tag')).map(tag => tag.textContent).join(', ');
+                const compensation = projectCard.querySelector('div:last-child > span').textContent;
+                
+                // Show project details in modal with Apply Now button
+                document.getElementById('modal-title').textContent = `Apply for: ${projectTitle}`;
+                document.getElementById('modal-content').innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <img class="h-10 w-10 rounded-full" src="${projectCard.querySelector('img').src}" alt="">
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${companyName}</div>
+                                <div class="text-sm text-gray-500">${postedDate}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-900">Project Description</h4>
+                            <p class="mt-2 text-gray-600">${projectDescription}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-900">Skills Required</h4>
+                            <p class="mt-2 text-gray-600">${skills}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-900">Compensation</h4>
+                            <p class="mt-2 text-gray-600">${compensation}</p>
+                        </div>
+                        <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium show-application-form-btn">
+                            Apply Now
+                        </button>
+                    </div>
+                `;
+                
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                
+                // Add event listener to the Apply Now button
+                document.querySelector('.show-application-form-btn')?.addEventListener('click', () => {
+                    showApplicationForm(projectTitle, companyName);
+                });
+            });
+        });
+
+        // ========== APPLICATION FORM ==========
+        function showApplicationForm(projectTitle, companyName) {
+            document.getElementById('modal-title').textContent = `Application for: ${projectTitle}`;
+            document.getElementById('modal-content').innerHTML = `
+                <form id="application-form" class="space-y-4">
+                    <input type="hidden" id="project-title" value="${projectTitle}">
+                    <input type="hidden" id="company-name" value="${companyName}">
+                    
+                    <div>
+                        <label for="applicant-name" class="block text-sm font-medium text-gray-700">Full Name*</label>
+                        <input type="text" id="applicant-name" required 
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    
+                    <div>
+                        <label for="applicant-email" class="block text-sm font-medium text-gray-700">Email*</label>
+                        <input type="email" id="applicant-email" required 
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    
+                    <div>
+                        <label for="applicant-phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                        <input type="tel" id="applicant-phone" 
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    
+                    <div>
+                        <label for="applicant-university" class="block text-sm font-medium text-gray-700">University/School*</label>
+                        <input type="text" id="applicant-university" required 
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    
+                    <div>
+                        <label for="applicant-major" class="block text-sm font-medium text-gray-700">Major/Field of Study*</label>
+                        <input type="text" id="applicant-major" required 
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    
+                    <div>
+                        <label for="applicant-skills" class="block text-sm font-medium text-gray-700">Relevant Skills*</label>
+                        <textarea id="applicant-skills" rows="3" required 
+                                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                  placeholder="List the skills that make you a good fit for this project"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="applicant-experience" class="block text-sm font-medium text-gray-700">Relevant Experience</label>
+                        <textarea id="applicant-experience" rows="4" 
+                                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                  placeholder="Describe any previous projects or work experience relevant to this position"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="applicant-why" class="block text-sm font-medium text-gray-700">Why are you interested in this project?*</label>
+                        <textarea id="applicant-why" rows="3" required 
+                                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                  placeholder="Explain why you want to work on this project and what you can contribute"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="applicant-portfolio" class="block text-sm font-medium text-gray-700">Portfolio/GitHub/LinkedIn</label>
+                        <input type="url" id="applicant-portfolio" 
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                               placeholder="https://">
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input id="applicant-terms" name="applicant-terms" type="checkbox" required 
+                               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <label for="applicant-terms" class="ml-2 block text-sm text-gray-700">
+                            I confirm that the information provided is accurate
+                        </label>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <button type="button" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm font-medium back-to-project-btn">
+                            Back to Project
+                        </button>
+                        <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                            Submit Application
+                        </button>
+                    </div>
+                </form>
+            `;
+            
+            // Back button returns to project details
+            document.querySelector('.back-to-project-btn')?.addEventListener('click', () => {
+                const projectTitle = document.getElementById('project-title').value;
+                const companyName = document.getElementById('company-name').value;
+                
+                // Re-show the project details view
+                document.getElementById('modal-title').textContent = `Apply for: ${projectTitle}`;
+                document.getElementById('modal-content').innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <img class="h-10 w-10 rounded-full" src="${document.querySelector(`.project-card h3`).textContent === projectTitle ? 
+                                document.querySelector(`.project-card h3`).closest('.project-card').querySelector('img').src : ''}" alt="">
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${companyName}</div>
+                                <div class="text-sm text-gray-500">${document.querySelector(`.project-card h3`).textContent === projectTitle ? 
+                                    document.querySelector(`.project-card h3`).closest('.project-card').querySelector('div.ml-4 > div:last-child').textContent : ''}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-900">Project Description</h4>
+                            <p class="mt-2 text-gray-600">${document.querySelector(`.project-card h3`).textContent === projectTitle ? 
+                                document.querySelector(`.project-card h3`).closest('.project-card').querySelector('p').textContent : ''}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-900">Skills Required</h4>
+                            <p class="mt-2 text-gray-600">${document.querySelector(`.project-card h3`).textContent === projectTitle ? 
+                                Array.from(document.querySelector(`.project-card h3`).closest('.project-card').querySelectorAll('.tag')).map(tag => tag.textContent).join(', ') : ''}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-900">Compensation</h4>
+                            <p class="mt-2 text-gray-600">${document.querySelector(`.project-card h3`).textContent === projectTitle ? 
+                                document.querySelector(`.project-card h3`).closest('.project-card').querySelector('div:last-child > span').textContent : ''}</p>
+                        </div>
+                        <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium show-application-form-btn">
+                            Apply Now
+                        </button>
+                    </div>
+                `;
+                
+                document.querySelector('.show-application-form-btn')?.addEventListener('click', () => {
+                    showApplicationForm(projectTitle, companyName);
+                });
+            });
+            
+            // Form submission
+            document.getElementById('application-form')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Get form values
+                const formData = {
+                    projectTitle: document.getElementById('project-title').value,
+                    companyName: document.getElementById('company-name').value,
+                    applicantName: document.getElementById('applicant-name').value,
+                    applicantEmail: document.getElementById('applicant-email').value,
+                    applicantPhone: document.getElementById('applicant-phone').value,
+                    applicantUniversity: document.getElementById('applicant-university').value,
+                    applicantMajor: document.getElementById('applicant-major').value,
+                    applicantSkills: document.getElementById('applicant-skills').value,
+                    applicantExperience: document.getElementById('applicant-experience').value,
+                    applicantWhy: document.getElementById('applicant-why').value,
+                    applicantPortfolio: document.getElementById('applicant-portfolio').value
+                };
+                
+                // Here you would typically send the data to your server
+                console.log('Application submitted:', formData);
+                
+                // Show success message
+                document.getElementById('modal-title').textContent = 'Application Submitted';
+                document.getElementById('modal-content').innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                            <i class="fas fa-check text-green-600"></i>
+                        </div>
+                        <h3 class="mt-4 text-lg font-medium text-gray-900">Application Successfully Submitted!</h3>
+                        <p class="mt-2 text-gray-600">Your application for "${formData.projectTitle}" has been received.</p>
+                        <p class="mt-1 text-gray-600">${formData.companyName} will review your application and contact you if you're selected.</p>
+                        <div class="mt-6">
+                            <button type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium close-modal-btn">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                document.querySelector('.close-modal-btn')?.addEventListener('click', () => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+        }
+
+        // ========== POST PROJECT FORM ==========
+        function showPostProjectForm() {
+            document.getElementById('modal-title').textContent = 'Post a New Project';
+            document.getElementById('modal-content').innerHTML = `
+                <form id="post-project-form" class="space-y-4">
+                    <div>
+                        <label for="project-title" class="block text-sm font-medium text-gray-700">Project Title*</label>
+                        <input type="text" id="project-title" required 
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    
+                    <div>
+                        <label for="project-description" class="block text-sm font-medium text-gray-700">Description*</label>
+                        <textarea id="project-description" rows="4" required
+                                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="project-domain" class="block text-sm font-medium text-gray-700">Domain*</label>
+                        <select id="project-domain" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="">Select a domain</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Mobile Development">Mobile Development</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                            <option value="Marketing">Marketing</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="project-skills" class="block text-sm font-medium text-gray-700">Required Skills (comma separated)</label>
+                        <input type="text" id="project-skills" 
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                               placeholder="e.g., JavaScript, Python, React">
+                    </div>
+                    
+                    <div>
+                        <label for="project-compensation" class="block text-sm font-medium text-gray-700">Compensation Type*</label>
+                        <select id="project-compensation" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="">Select compensation type</option>
+                            <option value="paid">Paid</option>
+                            <option value="certificate">Certificate/Experience</option>
+                            <option value="both">Both Paid and Certificate</option>
+                        </select>
+                    </div>
+                    
+                    <div id="payment-details" class="hidden">
+                        <label for="project-budget" class="block text-sm font-medium text-gray-700">Budget Range</label>
+                        <input type="text" id="project-budget" 
+                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                               placeholder="e.g., $500 - $1000">
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input id="project-terms" name="project-terms" type="checkbox" required 
+                               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <label for="project-terms" class="ml-2 block text-sm text-gray-700">
+                            I confirm that this is a legitimate project and agree to the 
+                            <a href="#" class="text-indigo-600 hover:text-indigo-500">terms and conditions</a>
+                        </label>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Post Project
+                        </button>
+                    </div>
+                </form>
+            `;
+
+            // Show/hide budget field based on compensation type
+            document.getElementById('project-compensation').addEventListener('change', function() {
+                const paymentDetails = document.getElementById('payment-details');
+                if (this.value === 'paid' || this.value === 'both') {
+                    paymentDetails.classList.remove('hidden');
+                } else {
+                    paymentDetails.classList.add('hidden');
+                }
+            });
+
+            // Form submission
+            document.getElementById('post-project-form')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Project posted successfully!');
+                modal.classList.add('hidden');
+            });
+        }
+
+        // ========== NEWSLETTER SIGNUP ==========
+        document.getElementById('newsletter-submit').addEventListener('click', (e) => {
+            e.preventDefault();
+            const emailInput = document.getElementById('newsletter-email');
+            const messageDiv = document.getElementById('newsletter-message');
+            
+            if (!emailInput.value || !emailInput.value.includes('@')) {
+                messageDiv.textContent = 'Please enter a valid email address';
+                messageDiv.classList.remove('hidden', 'text-green-500');
+                messageDiv.classList.add('text-red-500');
+                return;
+            }
+            
+            // Simulate API call
+            const submitBtn = document.getElementById('newsletter-submit');
+            submitBtn.innerHTML = '<span class="loading"></span>';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                messageDiv.textContent = 'Thank you for subscribing!';
+                messageDiv.classList.remove('hidden', 'text-red-500');
+                messageDiv.classList.add('text-green-500');
+                emailInput.value = '';
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
+                submitBtn.disabled = false;
+            }, 1500);
+        });
+
+        // Initialize filter on page load
+        filterProjects();
     </script>
 </body>
 </html>
