@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjectPath - Build Your Career</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>ProjectPath 🚀</h1>
+        <p>Build Your Career, One Project at a Time. New projects drop every Wednesday!</p>
+    </header>
+
+    <main>
+        <!-- This view shows all the career domains -->
+        <div id="domain-selection-view">
+            <h2>Choose Your Domain</h2>
+            <div id="domain-container" class="grid-container">
+                <!-- Domain cards will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- This view shows the details of a single selected project -->
+        <div id="project-detail-view" class="hidden">
+            <button id="back-to-domains-btn">← Back to Domains</button>
+            <h2 id="project-title"></h2>
+            <div class="project-content">
+                <h3>Problem Statement</h3>
+                <p id="project-problem"></p>
+
+                <h3>📚 Learning Objectives</h3>
+                <ul id="project-objectives"></ul>
+
+                <h3>🛠️ Suggested Tech & Tools</h3>
+                <div id="project-tech" class="tech-tags"></div>
+                
+                <h3>✅ Key Milestones</h3>
+                <ul id="project-milestones"></ul>
+
+                <button id="showcase-on-linkedin-btn">
+                    Showcase on LinkedIn
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2023 ProjectPath. All Rights Reserved.</p>
+    </footer>
+
+    <!-- LinkedIn Showcase Modal (hidden by default) -->
+    <div id="linkedin-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="close-modal-btn" class="close-button">×</button>
+            <h3>Showcase Your Project on LinkedIn!</h3>
+            <p>Copy this information and add it to the "Projects" section on your LinkedIn profile.</p>
+            
+            <div class="form-group">
+                <label for="linkedin-project-title">Project Title</label>
+                <div class="input-with-button">
+                    <input type="text" id="linkedin-project-title" readonly>
+                    <button class="copy-btn" data-copy-target="linkedin-project-title">Copy</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="linkedin-project-description">Description</label>
+                <div class="input-with-button">
+                    <textarea id="linkedin-project-description" rows="8" readonly></textarea>
+                    <button class="copy-btn" data-copy-target="linkedin-project-description">Copy</button>
+                </div>
+            </div>
+            
+            <a href="https://www.linkedin.com/profile/add/section/projects" target="_blank" class="linkedin-link-btn">
+                Add to LinkedIn Profile
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
